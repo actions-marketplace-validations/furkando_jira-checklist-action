@@ -18,7 +18,7 @@ export async function process(
 
   if (!valid) {
     core.setFailed(
-      'Invalid Pull Request: missing JIRA project in title or branch'
+      'Invalid Pull Request: missing JIRA project in title or branch / checklist is incomplete'
     )
   }
 }
