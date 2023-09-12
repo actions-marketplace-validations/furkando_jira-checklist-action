@@ -1,19 +1,21 @@
-name: 'jira-checklist-action'
-description: 'ensures that linked JIRA issues have a completed checklist'
-author: 'furkando'
+name: "jira-checklist-action"
+description: "GitHub action to enforce having completed checklist items in linked Jira issues"
+icon: "check-square"
+color: "green"
+author: "furkando"
 inputs:
   project:
     required: true
-    description: 'JIRA Project'
+    description: "JIRA Project"
   jira-host:
     required: true
-    description: 'JIRA Domain'
+    description: "JIRA Domain"
   jira-email:
     required: true
-    description: 'JIRA Login'
+    description: "JIRA Login"
   jira-api-token:
     required: true
-    description: 'JIRA API Token'
+    description: "JIRA API Token"
 runs:
-  using: 'node16'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/index.js"
