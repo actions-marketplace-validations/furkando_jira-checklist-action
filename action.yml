@@ -1,13 +1,10 @@
-name: 'jira-pr-link-action'
-description: 'ensures PRs can link to JIRA card'
-author: 'supplypike'
+name: 'jira-checklist-action'
+description: 'ensures that linked JIRA issues have a completed checklist'
+author: 'furkando'
 inputs:
   project:
     required: true
     description: 'JIRA Project'
-  ignore-author:
-    required: false
-    description: 'comma seperated list of authors to skip check for'
   jira-host:
     required: true
     description: 'JIRA Domain'
