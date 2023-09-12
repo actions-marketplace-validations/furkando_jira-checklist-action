@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Check for JIRA issue checklist
         id: check
-        uses: furkando/jira-checklist-action@v1.0.0
+        uses: ./
         with:
           project: 'RNDK'
           jira-host: ${{ secrets.JIRA_HOST }}
