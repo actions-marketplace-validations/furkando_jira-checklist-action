@@ -18,5 +18,5 @@ jobs:
     steps:
       - name: Check for JIRA issue checklist
         id: check
-        uses: furkando/jira-checklist-action@v1.0.0
+        uses: furkando/jira-checklist-action
 ```
