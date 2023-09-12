@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "jira-issue-link-action",
+  "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "GitHub action to enforce having completed checklist items in linked Jira issues",
   "main": "src/main.ts",
   "scripts": {
     "format": "prettier --write **/*.ts",
@@ -22,7 +22,7 @@
     "node",
     "setup"
   ],
-  "author": "",
+  "author": "furkando",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.10.0",

@@ -1,7 +1,7 @@
 ## Usage:
 
 ```yaml
-name: JIRA Connection
+name: JIRA Checklist
 
 on:
   pull_request:
@@ -12,14 +12,11 @@ on:
       - synchronize
 
 jobs:
-  enforce-issue:
+  enforce-issue-checklist:
     runs-on: ubuntu-latest
-    name: JIRA Association
+    name: JIRA Checklist
     steps:
-      - name: Check for JIRA ISSUE
+      - name: Check for JIRA issue checklist
         id: check
-        uses: supplypike/jira-pr-link-action@v1
-        with:
-          ignore-author: dependabot[bot]
-          project: "SRENEW"
+        uses: furkando/jira-checklist-action@v1.0.0
 ```
