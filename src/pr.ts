@@ -42,12 +42,6 @@ export async function validate(
   core.debug('title ' + event.pull_request.title)
   core.debug('head ' + event.pull_request.head.ref)
 
-  for (const author of options.ignoreAuthor) {
-    if (event.pull_request.user.login.toLowerCase() == author.toLowerCase()) {
-      return true
-    }
-  }
-
   const titleMatch = event.pull_request.title.match(re) || []
   const refMatch = event.pull_request.head.ref.match(re) || []
   const matches = [...titleMatch, ...refMatch]
@@ -59,9 +53,9 @@ export async function validate(
 
   for (const match of matches) {
     core.debug('Checking Jira issue ' + match)
-    const exists = await jira.issueExists(match)
+    const exists = await jira.issueExistsAndChecklistCompleted(match)
     if (!exists) {
-      core.error('Issue does not exist: ' + match)
+      core.error('Issue does not exist or checklist is incomplete:' + match)
       return false
     }
   }
