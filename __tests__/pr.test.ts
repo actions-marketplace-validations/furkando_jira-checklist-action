@@ -15,8 +15,7 @@ const mockClient = jest.mocked(JiraClientImpl, true)
 
 beforeEach(() => {
   options = {
-    project: 'SRENEW',
-    ignoreAuthor: [],
+    project: 'RNDK',
     jira: {
       host: 'https://jira.example.com',
       email: 'test@example.com',
@@ -28,7 +27,9 @@ beforeEach(() => {
 describe('#validate', () => {
   beforeEach(() => {
     mock = JSON.parse(JSON.stringify(pr))
-    mockClient.prototype.issueExists.mockResolvedValue(true)
+    mockClient.prototype.issueExistsAndChecklistCompleted.mockResolvedValue(
+      true
+    )
   })
 
   test('invalid PR', async () => {
@@ -37,36 +38,31 @@ describe('#validate', () => {
 
   test('valid PR title', async () => {
     mock.pull_request.title =
-      'Update the README with new information | SRENEW-1234'
+      'Update the README with new information | RNDK-1234'
 
     expect(await validate(mock, options)).toEqual(true)
   })
 
   test('valid PR branch', async () => {
-    mock.pull_request.head.ref = 'foo-SRENEW-1234'
+    mock.pull_request.head.ref = 'foo-RNDK-1234'
 
     expect(await validate(mock, options)).toEqual(true)
   })
 
   test('works with regex options', async () => {
-    options.project = '(SRENEW|FOO)'
+    options.project = '(RNDK|FOO)'
 
     mock.pull_request.head.ref = 'foo-FOO-1234'
     expect(await validate(mock, options)).toEqual(true)
 
-    mock.pull_request.head.ref = 'foo-SRENEW-1234'
-    expect(await validate(mock, options)).toEqual(true)
-  })
-
-  test('valid if ignoreAuthor matches', async () => {
-    options.ignoreAuthor = ['dependabot[bot]']
-    mock.pull_request.user.login = 'dependabot[bot]'
-
+    mock.pull_request.head.ref = 'foo-RNDK-1234'
     expect(await validate(mock, options)).toEqual(true)
   })
 
   test('invalid when jira card does not exist', async () => {
-    jest.spyOn(JiraClientImpl.prototype, 'issueExists').mockResolvedValue(false)
+    jest
+      .spyOn(JiraClientImpl.prototype, 'issueExistsAndChecklistCompleted')
+      .mockResolvedValue(false)
 
     mock.pull_request.title =
       'Update the README with new information | SRENEW-0000'
@@ -75,12 +71,12 @@ describe('#validate', () => {
   })
 
   test('invalid when one jira card does not exist', async () => {
-    mockClient.prototype.issueExists.mockImplementation(x =>
-      Promise.resolve(x === 'SRENEW-1234')
+    mockClient.prototype.issueExistsAndChecklistCompleted.mockImplementation(
+      x => Promise.resolve(x === 'RNDK-1234')
     )
 
     mock.pull_request.title =
-      'Update the README with new information | SRENEW-0000,SRENEW-1234'
+      'Update the README with new information | RNDK-0000,RNDK-1234'
 
     expect(await validate(mock, options)).toEqual(false)
   })
@@ -91,7 +87,7 @@ describe('#process', () => {
   let mockValidate: jest.Mock
   let context: any
   const mockInputs: Record<string, string> = {
-    project: 'SRENEW',
+    project: 'RNDK',
     'jira-host': 'https://jira.example.com',
     'jira-email': 'test@example.com',
     'jira-api-token': '1234567890'
